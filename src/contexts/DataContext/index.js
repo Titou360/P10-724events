@@ -10,10 +10,23 @@ import {
 const DataContext = createContext({});
 export const api = {
   loadData: async () => {
-    const json = await fetch("/events.json");
-    return json.json();
+    try {
+      const response = await fetch('/events.json');
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+
+      // eslint-disable-next-line no-console
+
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+      throw error; // Rethrow the error to handle it further if needed.
+    }
   },
 };
+
 
 export const DataProvider = ({ children }) => {
   const [error, setError] = useState(null);
@@ -25,10 +38,17 @@ export const DataProvider = ({ children }) => {
       setError(err);
     }
   }, []);
+
+    const events = data?.events;
+    const classifyEvents = events?.sort((evtA, evtB) => new Date(evtA.date) > new Date(evtB.date) ? -1 : 1);
+    const lastEvent = classifyEvents?.[0];
+
   useEffect(() => {
     if (data) return;
     getData();
-  });
+  }, [data]);
+
+
   
   return (
     <DataContext.Provider
@@ -36,6 +56,7 @@ export const DataProvider = ({ children }) => {
       value={{
         data,
         error,
+        lastEvent,
       }}
     >
       {children}
@@ -45,7 +66,6 @@ export const DataProvider = ({ children }) => {
 
 DataProvider.propTypes = {
   children: PropTypes.node.isRequired,
-
 };
 
 export const useData = () => useContext(DataContext);

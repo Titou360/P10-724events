@@ -1,11 +1,5 @@
-import PropTypes from "prop-types";
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import PropTypes from 'prop-types';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 const DataContext = createContext({});
 export const api = {
@@ -16,17 +10,13 @@ export const api = {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       return response.json();
-
-      // eslint-disable-next-line no-console
-
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
       throw error; // Rethrow the error to handle it further if needed.
     }
-  },
+  }
 };
-
 
 export const DataProvider = ({ children }) => {
   const [error, setError] = useState(null);
@@ -39,24 +29,22 @@ export const DataProvider = ({ children }) => {
     }
   }, []);
 
-    const events = data?.events;
-    const classifyEvents = events?.sort((evtA, evtB) => new Date(evtA.date) > new Date(evtB.date) ? -1 : 1);
-    const lastEvent = classifyEvents?.[0];
+  const events = data?.events;
+  const classifyEvents = events?.sort((evtA, evtB) => (new Date(evtA.date) > new Date(evtB.date) ? -1 : 1));
+  const lastEvent = classifyEvents?.[0];
 
   useEffect(() => {
     if (data) return;
     getData();
   }, [data]);
 
-
-  
   return (
     <DataContext.Provider
       // eslint-disable-next-line react/jsx-no-constructed-context-values
       value={{
         data,
         error,
-        lastEvent,
+        lastEvent
       }}
     >
       {children}
@@ -65,7 +53,7 @@ export const DataProvider = ({ children }) => {
 };
 
 DataProvider.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 };
 
 export const useData = () => useContext(DataContext);

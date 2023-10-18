@@ -13,7 +13,7 @@ import './style.scss';
 
 const Page = () => {
   const { lastEvent } = useData();
-   // je renomme last en lastEvent soit dernier évenement pour  bien differencier
+  // je renomme last en lastEvent soit dernier évenement pour  bien differencier
 
   return (
     <>
@@ -25,7 +25,9 @@ const Page = () => {
           <Slider />
         </section>
         <section className="ServicesContainer">
-          <h2 className="Title">Nos services</h2>
+          <h2 className="Title" id="nos-services">
+            Nos services
+          </h2>
           <p>Nous organisons des événements sur mesure partout dans le monde</p>
           <div className="ListContainer">
             <ServiceCard imageSrc="/images/priscilla-du-preez-Q7wGvnbuwj0-unsplash1.png">
@@ -48,11 +50,15 @@ const Page = () => {
           </div>
         </section>
         <section className="EventsContainer">
-          <h2 className="Title">Nos réalisations</h2>
+          <h2 className="Title" id="nos-realisations">
+            Nos réalisations
+          </h2>
           <EventList />
         </section>
         <section className="PeoplesContainer">
-          <h2 className="Title">Notre équipe</h2>
+          <h2 className="Title" id="notre-equipe">
+            Notre équipe
+          </h2>
           <p>Une équipe d’experts dédiés à l’ogranisation de vos événements</p>
           <div className="ListContainer">
             <PeopleCard imageSrc="/images/stephanie-liverani-Zz5LQe-VSMY-unsplash.png" name="Samira" position="CEO" />
@@ -64,7 +70,9 @@ const Page = () => {
           </div>
         </section>
         <div className="FormContainer" id="contact">
-          <h2 className="Title">Contact</h2>
+          <h2 className="Title" id="contact">
+            Contact
+          </h2>
           <Modal
             Content={
               <div className="ModalMessage--success">
@@ -80,11 +88,15 @@ const Page = () => {
       <footer className="row">
         <div className="col presta">
           <h3>Notre derniére prestation</h3>
-          <EventCard
-          imageSrc={lastEvent?.cover}
-          title={lastEvent?.title}
-          date={lastEvent ? new Date(lastEvent.date) : new Date()}
-          small label="boom" />
+          {lastEvent && (
+            <EventCard
+              imageSrc={lastEvent?.cover}
+              title={lastEvent?.title}
+              date={lastEvent ? new Date(lastEvent.date) : new Date()}
+              small
+              label={lastEvent?.type}
+            />
+          )}
         </div>
         <div className="col contact">
           <h3>Contactez-nous</h3>

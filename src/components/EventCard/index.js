@@ -18,7 +18,7 @@ const EventCard = ({ imageSrc, imageAlt, date = new Date(), title, label, small 
 );
 
 EventCard.propTypes = {
-  imageSrc: PropTypes.node.isRequired,
+  imageSrc: PropTypes.string.isRequired,
   imageAlt: PropTypes.string,
   date: PropTypes.instanceOf(Date).isRequired,
   title: PropTypes.string.isRequired,

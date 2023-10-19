@@ -11,18 +11,26 @@ const PER_PAGE = 9;
 
 const EventList = () => {
   const { data, error } = useData();
-  const [type, setType] = useState('');
+  const [type, setType] = useState();
   const [currentPage, setCurrentPage] = useState(1);
-  const filteredEvents = ((!type ? data?.events : data?.events) || []).filter((_, index) => {
-    if ((currentPage - 1) * PER_PAGE <= index && PER_PAGE * currentPage > index) {
+
+  const filteredEvents = (
+    (!type
+      ? data?.events
+      : data?.events) || []
+    ).filter((event, index) => {
+    if (
+      (!type || event.type === type) && // ajout de la condition de type
+      (currentPage - 1) * PER_PAGE <= index && PER_PAGE * currentPage > index) {
       return true;
     }
     return false;
   });
   const changeType = (evtType) => {
-    setType(evtType);
     setCurrentPage(1);
+    setType(evtType);
   };
+
   const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1;
   // create a new set with the "type" of meeting
   const typeList = new Set(data?.events.map((event) => event.type));

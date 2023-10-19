@@ -3,21 +3,21 @@ import PropTypes from 'prop-types';
 import './style.scss';
 
 export const FIELD_TYPES = {
-  INPUT_TEXT: 1,
-  TEXTAREA: 2
+  INPUT_TEXT: "text",
+  TEXTAREA: "textarea"
 };
 
 const Field = ({ type = FIELD_TYPES.INPUT_TEXT, label, name, placeholder }) => {
   let component;
   switch (type) {
     case FIELD_TYPES.INPUT_TEXT:
-      component = <input type="text" name={name} placeholder={placeholder} data-testid="field-testid" />;
+      component = <input required type="text" name={name} placeholder={placeholder} data-testid="field-testid" />;
       break;
     case FIELD_TYPES.TEXTAREA:
-      component = <textarea name={name} placeholder={placeholder} data-testid="field-testid" />;
+      component = <textarea required type="textarea" name={name} placeholder={placeholder} data-testid="field-testid" />;
       break;
     default:
-      component = <input type="text" name={name} placeholder={placeholder} data-testid="field-testid" />;
+      component = <input required type="text" name={name} placeholder={placeholder} data-testid="field-testid" />;
   }
   return (
     <div className="inputField">

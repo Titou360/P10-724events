@@ -1,15 +1,15 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import PropTypes from 'prop-types';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import './style.scss';
 
 const Select = ({ selection, onChange, name, titleEmpty, label, type = 'normal' }) => {
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState();
   const [collapsed, setCollapsed] = useState(true);
   const changeValue = (newValue) => {
-    onChange(newValue); // j'ai rajouté newValue ici pour accepter l'argument
+    onChange(newValue); // rajout de (newValue) sur onChange la fonction onChange sera appelée avec la nouvelle valeur chaque fois qu'un bouton radio est cliqué.
     setValue(newValue);
     setCollapsed(!collapsed);
   };
@@ -22,13 +22,17 @@ const Select = ({ selection, onChange, name, titleEmpty, label, type = 'normal' 
           {!collapsed && (
             <>
               {!titleEmpty && (
-                <li onClick={() => changeValue(null)}>
+                <li
+                  onClick={() => {
+                    changeValue(null);
+                  }}
+                >
                   <input defaultChecked={!value} name="selected" type="radio" /> Toutes
                 </li>
               )}
-              {selection.map((select) => (
-                <li key={select} onChange={() => changeValue(select)}>
-                  <input checked={value === select} name="selected" type="radio" /> {select}
+              {selection.map((s) => (
+                <li key={s} onClick={() => changeValue(s)}>
+                  <input defaultChecked={value === s} name="selected" type="radio" /> {s}
                 </li>
               ))}
             </>

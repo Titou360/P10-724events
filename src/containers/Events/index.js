@@ -13,15 +13,12 @@ const EventList = () => {
   const { data, error } = useData();
   const [type, setType] = useState();
   const [currentPage, setCurrentPage] = useState(1);
-
-  const filteredEvents = (
-    (!type
-      ? data?.events
-      : data?.events) || []
-    ).filter((event, index) => {
+  const filteredEvents = ((!type ? data?.events : data?.events) || []).filter((event, index) => {
     if (
-      (!type || event.type === type) && // ajout de la condition de type
-      (currentPage - 1) * PER_PAGE <= index && PER_PAGE * currentPage > index) {
+      (!type || event.type === type) && // Ajout de la condition de type
+      (currentPage - 1) * PER_PAGE <= index &&
+      PER_PAGE * currentPage > index
+    ) {
       return true;
     }
     return false;
@@ -30,15 +27,14 @@ const EventList = () => {
     setCurrentPage(1);
     setType(evtType);
   };
-
   const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1;
-  // create a new set with the "type" of meeting
   const typeList = new Set(data?.events.map((event) => event.type));
+
   return (
     <>
-      {error && <div>Une erreur est apparue</div>}
+      {error && <div>An error occured</div>}
       {data === null ? (
-        'Chargement...'
+        'loading'
       ) : (
         <>
           <h3 className="SelectTitle">Catégories</h3>
@@ -49,10 +45,10 @@ const EventList = () => {
                 {({ setIsOpened }) => (
                   <EventCard
                     onClick={() => setIsOpened(true)}
-                    imageSrc={event?.cover}
+                    imageSrc={event.cover}
                     title={event.title}
                     date={new Date(event.date)}
-                    label={event?.type}
+                    label={event.type}
                   />
                 )}
               </Modal>

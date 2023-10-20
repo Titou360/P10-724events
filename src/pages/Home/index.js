@@ -1,19 +1,26 @@
 import EventCard from '../../components/EventCard';
-import Icon from '../../components/Icon';
-import Logo from '../../components/Logo';
 import PeopleCard from '../../components/PeopleCard';
 import ServiceCard from '../../components/ServiceCard';
+import Menu from '../../containers/Menu';
+
+import Icon from '../../components/Icon';
+import Logo from '../../components/Logo';
 import EventList from '../../containers/Events';
 import Form from '../../containers/Form';
-import Menu from '../../containers/Menu';
 import Modal from '../../containers/Modal';
 import Slider from '../../containers/Slider';
 import { useData } from '../../contexts/DataContext';
 import './style.scss';
 
 const Page = () => {
-  const { lastEvent } = useData();
-  // je renomme last en lastEvent soit dernier évenement pour  bien differencier
+  const dataContext = useData();
+
+  if (dataContext.data === null) {
+    // Affichez un indicateur de chargement ou un message en attendant que les données soient chargées
+    return <div>Chargement en cours...</div>;
+  }
+
+  const { lastEvent } = dataContext;
 
   return (
     <>
@@ -70,10 +77,9 @@ const Page = () => {
           </div>
         </section>
         <div className="FormContainer" id="contact">
-          <h2 className="Title" id="contact">
-            Contact
-          </h2>
+          <h2 className="Title">Contact</h2>
           <Modal
+          data-testid ="modal-test-id"
             Content={
               <div className="ModalMessage--success">
                 <div>Message envoyé !</div>
@@ -81,24 +87,22 @@ const Page = () => {
               </div>
             }
           >
-            {({ setIsOpened }) => <Form onSuccess={() => setIsOpened(true)} onError={() => null} />}
+            {({ setIsOpened }) => (
+              <Form
+                onSuccess={() => {
+                  setIsOpened(true);
+                }}
+                onError={() => null}
+              />
+            )}
           </Modal>
         </div>
       </main>
       <footer className="row">
         <div className="col presta">
           <h3>Notre derniére prestation</h3>
-          {lastEvent ? (
-            <EventCard
-              imageSrc={lastEvent?.cover}
-              title={lastEvent?.title}
-              date={lastEvent ? new Date(lastEvent.date) : new Date()}
-              small
-              label={lastEvent?.type}
-            />
-          ) : (
-            <div> </div>
-          )}
+
+          {lastEvent && <EventCard imageSrc={lastEvent?.cover} title={lastEvent?.title} date={new Date(lastEvent?.date)} small label="boom" />}
         </div>
         <div className="col contact">
           <h3>Contactez-nous</h3>

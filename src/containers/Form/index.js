@@ -15,11 +15,11 @@ const Form = ({ onSuccess, onError }) => {
     async (evt) => {
       evt.preventDefault();
       setSending(true);
-      // We try to call mockContactApi
+
       try {
         await mockContactApi();
         setSending(false);
-        onSuccess();
+        onSuccess(); // ajout de onSucces pour ouvrir la modal
       } catch (err) {
         setSending(false);
         onError(err);
@@ -31,16 +31,16 @@ const Form = ({ onSuccess, onError }) => {
     <form onSubmit={sendContact}>
       <div className="row">
         <div className="col">
-          <Field placeholder="Votre nom" label="Nom" required />
-          <Field placeholder="Votre prénom" label="Prénom" required />
-          <Select selection={['Personel', 'Entreprise']} onChange={() => null} label="Personel / Entreprise" type="large" titleEmpty required />
-          <Field placeholder="Votre EMAIL" label="Email" required />
+          <Field placeholder="Nom" label="Nom" required />
+          <Field placeholder="Prénom" label="Prénom" required />
+          <Select selection={['Personel', 'Entreprise']} onChange={() => null} label="Personel / Entreprise" type="large" titleEmpty />
+          <Field placeholder="Email" label="Email" required />
           <Button type={BUTTON_TYPES.SUBMIT} disabled={sending}>
             {sending ? 'En cours' : 'Envoyer'}
           </Button>
         </div>
         <div className="col">
-          <Field placeholder="Votre message" label="Message" type={FIELD_TYPES.TEXTAREA} required />
+          <Field placeholder="Message" label="Message" type={FIELD_TYPES.TEXTAREA} required />
         </div>
       </div>
     </form>

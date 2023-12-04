@@ -9,7 +9,7 @@ const Select = ({ selection, onChange, name, titleEmpty, label, type = 'normal' 
   const [value, setValue] = useState();
   const [collapsed, setCollapsed] = useState(true);
   const changeValue = (newValue) => {
-    onChange(newValue); // rajout de (newValue) sur onChange la fonction onChange sera appelée avec la nouvelle valeur chaque fois qu'un bouton radio est cliqué.
+    onChange(newValue); // Adding a NewValue argument on onChange
     setValue(newValue);
     setCollapsed(!collapsed);
   };

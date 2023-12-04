@@ -22,7 +22,9 @@ describe('When Events is created', () => {
         })
       );
       await screen.findByText('En cours');
+        // adding a timeout in milliseconds on findByText in second option !important
       await screen.findByText('Envoyer', {}, { timeout: 5000 });
+      
       expect(onSuccess).toHaveBeenCalled();
     });
   });

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import Home from './index';
 
 describe('When Form is created', () => {
@@ -29,26 +29,38 @@ describe('When Form is created', () => {
 describe('When a page is created', ()  => {
   it('a list of events is displayed', async () => {
     // to implement
-    // render(<Home />);
-    // const eventList = screen.getByTestId('events-testid');
-    // expect(eventList).toBeInTheDocument();
+    // After Home rendering, verify if the const defined is online 
+    render(<Home />);
+    const eventList = screen.getByTestId('events-testid');
+    expect(eventList).toBeInTheDocument();
   });
 
-  // to implement
   it('a list a people is displayed', async () => {
     // to implement
-    // render(<Home />);
-    // const peopleCard = screen.getByTestId('People-Card-testid');
-    // expect(peopleCard).toBeInTheDocument();
+    // After Home rendering, verify if the const defined is online
+    render(<Home />);
+    const peopleCard = screen.getByTestId('People-Card-testid');
+    expect(peopleCard).toBeInTheDocument();
   });
 
   it('a footer is displayed', () => {
-    render(<Home />);
     // to implement
+    // After Home rendering, verify if the const defined is online
+    render(<Home />);
+    const footer = screen.getByTestId('Footer-testid');
+    expect(footer).toBeInTheDocument();
   });
 
-  it('an event card, with the last event, is displayed', () => {
-    render(<Home />);
+  it("an event card, with the last event, is displayed",   () => {
     // to implement
-  });
-});
+    render(<Home />);
+
+    // element is initially not present... need an asynchronous method
+    // wait for appearance inside an assertion
+
+    waitFor(() => {
+      const cardDisplayed = screen.getByTestId('card-testid');
+      expect(cardDisplayed).toBeInTheDocument();
+    });
+  })
+})

@@ -15,7 +15,7 @@ const Slider = () => {
   };
 
   const nextCard = () => {
-    setIndex((prevIndex) => (prevIndex < byDateDesc.length - 1 ? prevIndex + 1 : 0));
+    setIndex((previousIndex) => (previousIndex < byDateDesc.length - 1 ? previousIndex + 1 : 0));
   };
 
   useEffect(() => {
@@ -39,11 +39,7 @@ const Slider = () => {
             <div className="SlideCard__pagination">
               {byDateDesc.map((e, radioIdx) => (
                 <input
-                  key={`${e.date}`}
-                  type="radio"
-                  name={`radio-button-${radioIdx}`} // ajout d'un nom propre a chaque boutons
-                  checked={idx === radioIdx}
-                  onChange={() => handleRadioChange(radioIdx)}
+                  key={`${e.date}`} type="radio" name={`radio-button-${radioIdx}`} checked={idx === radioIdx} onChange={() => handleRadioChange(radioIdx)}
                 />
               ))}
             </div>

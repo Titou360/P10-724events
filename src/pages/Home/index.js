@@ -63,7 +63,7 @@ const Page = () => {
           <EventList />
         </section>
         <section className="PeoplesContainer">
-          <h2 className="Title" id="notre-equipe">
+          <h2 className="Title" id="notre-equipe" data-testid="People-Card-testid">
             Notre équipe
           </h2>
           <p>Une équipe d’experts dédiés à l’ogranisation de vos événements</p>
@@ -79,7 +79,7 @@ const Page = () => {
         <div className="FormContainer" id="contact">
           <h2 className="Title">Contact</h2>
           <Modal
-          data-testid ="modal-test-id"
+            data-testid="modal-test-id"
             Content={
               <div className="ModalMessage--success">
                 <div>Message envoyé !</div>
@@ -98,11 +98,19 @@ const Page = () => {
           </Modal>
         </div>
       </main>
-      <footer className="row">
+      <footer className="row" data-testid="Footer-testid">
         <div className="col presta">
           <h3>Notre derniére prestation</h3>
 
-          {lastEvent && <EventCard imageSrc={lastEvent?.cover} title={lastEvent?.title} date={new Date(lastEvent?.date)} small label="boom" />}
+          {lastEvent  && (
+            <EventCard
+              imageSrc={lastEvent?.cover}
+              title={lastEvent?.title}
+              date={new Date(lastEvent?.date)}
+              small
+              label="boom"
+            />
+          )}
         </div>
         <div className="col contact">
           <h3>Contactez-nous</h3>
